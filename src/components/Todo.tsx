@@ -1,6 +1,6 @@
 import { useSetRecoilState } from "recoil";
 import { ToDoSate } from "./Atom/Atom";
-import { ITodo } from "./interface/interface";
+import { categories, ITodo } from "./interface/interface";
 
 export default function ToDo({ text, category, id }: ITodo) {
   const setTodo = useSetRecoilState<ITodo[]>(ToDoSate);
@@ -16,14 +16,14 @@ export default function ToDo({ text, category, id }: ITodo) {
   return (
     <li>
       <span>{text}</span>
-      {category !== "TO_DO" && (
-        <button onClick={() => onClick("TO_DO")}>To do</button>
+      {category !== categories.TO_DO && (
+        <button onClick={() => onClick(categories.TO_DO)}>To do</button>
       )}
-      {category !== "DOING" && (
-        <button onClick={() => onClick("DOING")}>Doing</button>
+      {category !== categories.DOING && (
+        <button onClick={() => onClick(categories.DOING)}>Doing</button>
       )}
-      {category !== "DONE" && (
-        <button onClick={() => onClick("DONE")}>Done</button>
+      {category !== categories.DONE && (
+        <button onClick={() => onClick(categories.DONE)}>Done</button>
       )}
     </li>
   );

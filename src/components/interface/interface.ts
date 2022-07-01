@@ -1,8 +1,13 @@
 export interface ITodo {
   text: string;
   id: number;
-  category: "TO_DO" | "DOING" | "DONE";
+  category: categories;
 }
 export interface IfromType {
   Todo: string;
+}
+export enum categories {
+  "TO_DO",
+  "DOING",
+  "DONE",
 }

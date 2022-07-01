@@ -1,16 +1,14 @@
 import { useForm } from "react-hook-form";
-import { useSetRecoilState } from "recoil";
-import { ToDoSate } from "./Atom/Atom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { categoryState, ToDoSate } from "./Atom/Atom";
 import { IfromType } from "./interface/interface";
 
 export default function CreateToDo() {
   const setTodo = useSetRecoilState(ToDoSate);
+  const category = useRecoilValue(categoryState);
   const { register, handleSubmit, setValue } = useForm<IfromType>();
   const onVaild = ({ Todo }: IfromType) => {
-    setTodo((prev) => [
-      { text: Todo, id: Date.now(), category: "TO_DO" },
-      ...prev,
-    ]);
+    setTodo((prev) => [{ text: Todo, id: Date.now(), category }, ...prev]);
   };
 
   return (
