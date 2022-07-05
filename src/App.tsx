@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import ToDoList from "./components/ToDoList";
 
 const GobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -50,12 +49,7 @@ table {
 `;
 
 function App() {
-  return (
-    <>
-      <GobalStyle />
-      <ToDoList />
-    </>
-  );
+  return <></>;
 }
 
 export default App;
