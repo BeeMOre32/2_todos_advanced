@@ -1,4 +1,14 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from "react-beautiful-dnd";
+import { useRecoilState } from "recoil";
+import { toDoState } from "./components/Atom/Atom";
+import DraggableCard from "./components/DraggableCard";
+import Board from "./components/Board";
 
 const GobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -48,8 +58,66 @@ table {
 }
 `;
 
+const Wrapper = styled.div`
+  display: flex;
+  max-width: 680px;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+const BoardGrid = styled.div`
+  display: grid;
+  width: 100%;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+`;
+
 function App() {
-  return <></>;
+  const [toDo, setToDo] = useRecoilState(toDoState);
+  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+    if (!destination) return;
+    if (destination?.droppableId === source.droppableId) {
+      setToDo((allBoard) => {
+        // same borad movement
+        const copy = [...allBoard[source.droppableId]];
+        copy.splice(source.index, 1);
+        copy.splice(destination.index, 0, draggableId);
+        return {
+          ...allBoard,
+          [source.droppableId]: copy,
+        };
+      });
+    }
+    if (destination.droppableId !== source.droppableId) {
+      setToDo((allBoard) => {
+        const sourceBoard = [...allBoard[source.droppableId]];
+        const destinationBoard = [...allBoard[destination.droppableId]];
+        sourceBoard.splice(source.index, 1);
+        destinationBoard.splice(destination.index, 0, draggableId);
+        return {
+          ...allBoard,
+          [source.droppableId]: sourceBoard,
+          [destination.droppableId]: destinationBoard,
+        };
+      });
+    }
+  };
+  return (
+    <>
+      <GobalStyle />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Wrapper>
+          <BoardGrid>
+            {Object.keys(toDo).map((boardId) => (
+              <Board key={boardId} boardId={boardId} toDo={toDo[boardId]} />
+            ))}
+          </BoardGrid>
+        </Wrapper>
+      </DragDropContext>
+    </>
+  );
 }
 
 export default App;
