@@ -1,13 +1,15 @@
 import { Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import DraggableCard from "./DraggableCard";
-import { IAreaProps, IBoardProps } from "./interface/interface";
+import { IAreaProps, IBoardProps } from "../interface/interface";
+import BoardInput from "./BoardInput";
 
 const Wrapper = styled.div`
-  padding: 20px 10px;
+  padding: 10px 0px;
   background-color: ${(p) => p.theme.bgColor};
   border-radius: 8px;
-  min-height: 50px;
+  min-height: 70px;
+  width: 300px;
   display: flex;
   flex-direction: column;
 `;
@@ -21,6 +23,7 @@ const Title = styled.h2`
 `;
 
 const Area = styled.div<IAreaProps>`
+  padding: 10px 10px;
   background-color: ${(props) =>
     props.isDraggingOver
       ? props.theme.accentColor
@@ -35,6 +38,7 @@ function Board({ toDo, boardId }: IBoardProps) {
   return (
     <Wrapper>
       <Title>{boardId}</Title>
+      <BoardInput BoardId={boardId} />
       <Droppable droppableId={boardId}>
         {(p, snap) => (
           <Area
@@ -44,7 +48,12 @@ function Board({ toDo, boardId }: IBoardProps) {
             {...p.droppableProps}
           >
             {toDo.map((todo, index) => (
-              <DraggableCard key={todo} todo={todo} index={index} />
+              <DraggableCard
+                key={todo.id}
+                toDoId={todo.id}
+                index={index}
+                toDoText={todo.text}
+              />
             ))}
             {p.placeholder}
           </Area>

@@ -1,11 +1,11 @@
-import { atom, selector } from "recoil";
+import { atom } from "recoil";
 import { IToDoState } from "../interface/interface";
 
 export const toDoState = atom<IToDoState>({
   key: "Todo",
   default: {
-    To_Do: ["a", "d"],
-    Doing: ["f", "b"],
-    Done: ["c", "e"],
+    To_Do: [],
+    Doing: [],
+    Done: [],
   },
 });
