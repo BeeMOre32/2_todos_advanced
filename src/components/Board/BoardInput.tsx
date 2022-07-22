@@ -4,6 +4,24 @@ import styled from "styled-components";
 import { toDoState } from "../Atom/Atom";
 import { IBoardInputProps, IToDo } from "../interface/interface";
 
+const Form = styled.form`
+  padding: 10px 10px;
+  width: 100%;
+  box-sizing: border-box;
+  input {
+    width: 100%;
+    background-color: inherit;
+    border: none;
+    color: white;
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: white;
+    }
+  }
+`;
+
 export default function BoardInput({ BoardId }: IBoardInputProps) {
   const { register, handleSubmit, setValue } = useForm<IToDo>();
   const setToDo = useSetRecoilState(toDoState);
@@ -30,20 +48,3 @@ export default function BoardInput({ BoardId }: IBoardInputProps) {
     </Form>
   );
 }
-const Form = styled.form`
-  padding: 10px 10px;
-  width: 100%;
-  box-sizing: border-box;
-  input {
-    width: 100%;
-    background-color: inherit;
-    border: none;
-    color: white;
-    &:focus {
-      outline: none;
-    }
-    &::placeholder {
-      color: white;
-    }
-  }
-`;

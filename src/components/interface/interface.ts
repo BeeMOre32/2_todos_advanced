@@ -7,6 +7,7 @@ export interface IDraggableProps {
 export interface IBoardProps {
   toDo: ITodo[];
   boardId: string;
+  index: number;
 }
 
 export interface IToDoState {
@@ -29,4 +30,8 @@ export interface ITodo {
 
 export interface IBoardInputProps {
   BoardId: string;
+}
+
+export interface IBoardInput {
+  Board: string;
 }
